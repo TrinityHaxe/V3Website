@@ -336,15 +336,17 @@ body::before {
   const terminalOutput = document.getElementById('terminal-output');
   const terminalContent = document.getElementById('terminal-content');
 
-  const commands = {
-    help: 'Available commands:\nhelp - Display available commands\ninfo - Get information\nclue - Reveal a clue\nclear - Clear the terminal\nv3 - ???\nlogs - Access system logs',
-    info: 'All will be revealed in time...',
-    clue: 'Look beyond what you see.',
-    clear: '',
-    v3: 'Did you really think it was that easy?',
-    greg: 'greg is everything'
-    logs: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.'
-  };
+const commands = {
+  help: 'Available commands:\nhelp - Display available commands\ninfo - Get information\nclue - Reveal a clue\nclear - Clear the terminal\nv3 - ???\nlogs - Access system logs\ngreg - ???',
+  info: 'All will be revealed in time...',
+  clue: 'Look beyond what you see.',
+  clear: '',
+  v3: 'Did you really think it was that easy?',
+  logs: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.',
+  greg: 'greg is everything'
+};
+
+
 
   let commandHistory = [];
   let historyIndex = -1;
