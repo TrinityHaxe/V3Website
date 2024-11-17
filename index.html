@@ -2,37 +2,70 @@
 <html>
 <head>
   <title>V3sShowdown</title>
+  <style>
+
+    body {
+      background-color: #0a0a0a;
+      color: #f2f2f2;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1, h2 {
+      color: #ff4500;
+    }
+
+    #countdown {
+      font-size: 28px;
+      color: #00ffcc;
+      font-weight: bold;
+      text-shadow: 0 0 8px #00ffcc;
+      margin-top: 30px;
+    }
+
+
+    #timer {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        text-shadow: 0 0 8px #00ffcc;
+      }
+      50% {
+        text-shadow: 0 0 16px #00ffcc;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to V3sShowdown!</h1>
-  <p>This is a super simple website.</p>
-  <div id="countdown">
+  <h1>V3sShowdown</h1>
   <h2>Countdown to December 20, 2024:</h2>
-  <p id="timer"></p>
-</div>
-<script>
+  <div id="countdown">
+    <p id="timer"></p>
+  </div>
+  <script>
+    var countdownDate = new Date("December 20, 2024 00:00:00").getTime();
 
-  var countdownDate = new Date("December 20, 2024 00:00:00").getTime();
+    function updateCountdown() {
+      var now = new Date().getTime();
+      var timeLeft = countdownDate - now;
 
-  function updateCountdown() {
-    var now = new Date().getTime();
-    var timeLeft = countdownDate - now;
+      var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      document.getElementById("timer").innerText = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
 
-    document.getElementById("timer").innerText = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-
-    if (timeLeft < 0) {
-      document.getElementById("timer").innerText = "EXPIRED";
+      if (timeLeft < 0) {
+        document.getElementById("timer").innerText = "EXPIRED";
+      }
     }
-  }
 
-  updateCountdown(); 
-  setInterval(updateCountdown, 1000); 
-</script>
-
+    updateCountdown(); 
+    setInterval(updateCountdown, 1000); 
+  </script>
 </body>
 </html>
