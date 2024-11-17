@@ -321,8 +321,8 @@
       info: 'All will be revealed in time...',
       clue: 'Look beyond what you see.',
       clear: '',
-      V3: 'Did you really think it was that easy?',
-      LOGS: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.'
+      v3: 'Did you really think it was that easy?',
+      logs: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.'
     };
 
     let commandHistory = [];
@@ -355,7 +355,7 @@
 
     function processCommand(input) {
       appendOutput("C:\\> " + input);
-      const command = input.toUpperCase();
+      const command = input.toLowerCase();
       if (commands.hasOwnProperty(command)) {
         if (command === 'CLEAR') {
           terminalOutput.innerHTML = '';
