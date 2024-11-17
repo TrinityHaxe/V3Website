@@ -18,23 +18,22 @@
       background-color: #000; /* Black background */
       color: #fff; /* White text */
       font-family: 'VT323', monospace;
-      position: relative;
-      overflow: hidden;
       display: flex;
       justify-content: center; /* Center horizontally */
       align-items: center;     /* Center vertically */
+      overflow: hidden;
     }
 
     .container {
       text-align: center;
+      position: relative;
     }
 
     h1 {
       color: #fff;
       margin: 0;
       font-size: 64px;
-      position: relative;
-      animation: glitch 1s infinite;
+      animation: titlePulse 2s infinite;
     }
 
     #timer {
@@ -43,39 +42,21 @@
       font-weight: bold;
       text-shadow: 0 0 10px #ff0000;
       margin-top: 20px;
-      animation: pulse 2s infinite, glitch 1s infinite;
+      animation: timerPulse 2s infinite;
     }
 
-    /* Glitch effect */
-    @keyframes glitch {
-      0% {
-        text-shadow: none;
-        transform: none;
+    /* Pulse effect for the title */
+    @keyframes titlePulse {
+      0%, 100% {
+        text-shadow: 0 0 5px #ff0000;
       }
-      20% {
-        text-shadow: -2px 0 red;
-        transform: skew(-5deg);
-      }
-      40% {
-        text-shadow: 2px 0 blue;
-        transform: skew(5deg);
-      }
-      60% {
-        text-shadow: -2px 0 red;
-        transform: skew(-5deg);
-      }
-      80% {
-        text-shadow: 2px 0 blue;
-        transform: skew(5deg);
-      }
-      100% {
-        text-shadow: none;
-        transform: none;
+      50% {
+        text-shadow: 0 0 20px #ff0000;
       }
     }
 
     /* Pulse effect for the timer */
-    @keyframes pulse {
+    @keyframes timerPulse {
       0%, 100% {
         text-shadow: 0 0 5px #ff0000;
       }
@@ -98,7 +79,7 @@
       );
       background-size: 100% 10px; /* Adjusts the spacing between lines */
       pointer-events: none;
-      animation: screenLinesAnimation 0.5s infinite;
+      animation: screenLinesAnimation 1s infinite;
     }
 
     @keyframes screenLinesAnimation {
