@@ -317,10 +317,12 @@
     const terminalContent = document.getElementById('terminal-content');
 
     const commands = {
-      help: 'Available commands:\nhelp - Display available commands\ninfo - Get information\nclue - Reveal a clue\nclear - Clear the terminal',
+      help: 'Available commands:\nhelp - Display available commands\ninfo - Get information\nclue - Reveal a clue\nclear - Clear the terminal\nV3 - ???\nLOGS - Access system logs',
       info: 'All will be revealed in time...',
       clue: 'Look beyond what you see.',
-      clear: ''
+      clear: '',
+      V3: 'Did you really think it was that easy?',
+      LOGS: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.'
     };
 
     let commandHistory = [];
@@ -353,9 +355,9 @@
 
     function processCommand(input) {
       appendOutput("C:\\> " + input);
-      const command = input.toLowerCase();
+      const command = input.toUpperCase();
       if (commands.hasOwnProperty(command)) {
-        if (command === 'clear') {
+        if (command === 'CLEAR') {
           terminalOutput.innerHTML = '';
         } else {
           typeResponse(commands[command]);
