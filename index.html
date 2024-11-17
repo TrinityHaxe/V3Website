@@ -6,75 +6,108 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
   <!-- Your CSS styles -->
   <style>
-    /* Basic styles */
-    body {
-      background-color: #000000; /* Black background */
-      color: #FFFFFF; /* White text */
-      text-align: center;
-      font-family: 'Roboto Mono', monospace;
-      position: relative; /* For pseudo-elements */
-      overflow: hidden; /* Hide overflow caused by transformations */
-    }
+/* Ensure full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-    h1 {
-      color: #FFFFFF;
-      margin-top: 50px;
-      font-size: 48px;
-      /* Add glitch effect (optional) */
-    }
+/* Basic styles */
+body {
+  background-color: #000000; /* Black background */
+  color: #FFFFFF; /* White text */
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+  position: relative; /* For pseudo-elements */
+  overflow: hidden; /* Hide overflow caused by transformations */
+}
 
-    #timer {
-      font-size: 36px;
-      color: #00FF00; /* Bright green color */
-      font-weight: bold;
-      text-shadow: 0 0 10px #00FF00;
-      margin-top: 20px;
-      /* Add the animation */
-      animation: pulse 2s infinite;
-    }
+h1 {
+  color: #FFFFFF;
+  margin-top: 50px;
+  font-size: 48px;
+}
 
-    @keyframes pulse {
-      0% { text-shadow: 0 0 5px #00FF00; }
-      50% { text-shadow: 0 0 20px #00FF00; }
-      100% { text-shadow: 0 0 5px #00FF00; }
-    }
+#timer {
+  font-size: 36px;
+  color: #00FF00; /* Bright green color */
+  font-weight: bold;
+  text-shadow: 0 0 10px #00FF00;
+  margin-top: 20px;
+  animation: pulse 2s infinite;
+}
 
-    /* Screen lines effect */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(
-        rgba(255, 255, 255, 0.05) 50%, 
-        transparent 50%
-      );
-      background-size: 100% 4px; /* Adjust the height of the lines */
-      pointer-events: none; /* Allow clicks through this layer */
-    }
+@keyframes pulse {
+  0% { text-shadow: 0 0 5px #00FF00; }
+  50% { text-shadow: 0 0 20px #00FF00; }
+  100% { text-shadow: 0 0 5px #00FF00; }
+}
 
-    /* Fisheye lens effect */
-    .fisheye {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      transform: scale(1.1);
-    }
+/* Screen lines effect */
+body::before {
+  content: "";
+  position: fixed; /* Changed from absolute to fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.05) 50%, 
+    transparent 50%
+  );
+  background-size: 100% 4px; /* Adjust the height of the lines */
+  pointer-events: none; /* Allow clicks through this layer */
+  animation: screenLinesAnimation 0.5s infinite;
+}
 
-    .fisheye::after {
-      content: "";
-      position: absolute;
-      top: -25%;
-      left: -25%;
-      width: 150%;
-      height: 150%;
-      background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
-      pointer-events: none;
-      mix-blend-mode: multiply;
-    }
+@keyframes screenLinesAnimation {
+  0% {
+    background-position: 0 0;
+    opacity: 0.8;
+  }
+  20% {
+    background-position: 0 -2px;
+    opacity: 0.6;
+  }
+  40% {
+    background-position: 0 -4px;
+    opacity: 0.7;
+  }
+  60% {
+    background-position: 0 -2px;
+    opacity: 0.9;
+  }
+  80% {
+    background-position: 0 0;
+    opacity: 0.5;
+  }
+  100% {
+    background-position: 0 -1px;
+    opacity: 0.8;
+  }
+}
+
+/* Fisheye lens effect */
+.fisheye {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: scale(1.1);
+}
+
+.fisheye::after {
+  content: "";
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
 
   </style>
 </head>
