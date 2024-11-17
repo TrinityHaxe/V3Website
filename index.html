@@ -252,7 +252,6 @@
         margin: 20px auto;
       }
     }
-
   </style>
 </head>
 <body>
@@ -286,50 +285,52 @@
   </div>
 
   <!-- JavaScript Code -->
-  <script>
-    // Countdown Timer Script
-    var countdownDate = new Date("December 20, 2024 00:00:00").getTime();
+<script>
+  // Countdown Timer Script (unchanged)
+  var countdownDate = new Date("December 20, 2024 00:00:00").getTime();
 
-    function updateCountdown() {
-      var now = new Date().getTime();
-      var timeLeft = countdownDate - now;
+  function updateCountdown() {
+    var now = new Date().getTime();
+    var timeLeft = countdownDate - now;
 
-      var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-      document.getElementById("timer").innerText =
-        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    document.getElementById("timer").innerText =
+      days + "d " + hours + "h " + minutes + "m " + seconds + "s";
 
-      if (timeLeft < 0) {
-        clearInterval(countdownInterval);
-        document.getElementById("timer").innerText = "EXPIRED";
-      }
+    if (timeLeft < 0) {
+      clearInterval(countdownInterval);
+      document.getElementById("timer").innerText = "EXPIRED";
     }
+  }
 
-    updateCountdown();
-    var countdownInterval = setInterval(updateCountdown, 1000);
+  updateCountdown();
+  var countdownInterval = setInterval(updateCountdown, 1000);
 
-    // Terminal Script
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.getElementById('terminal-output');
-    const terminalContent = document.getElementById('terminal-content');
+  // Terminal Script
+  const terminalInput = document.getElementById('terminal-input');
+  const terminalOutput = document.getElementById('terminal-output');
+  const terminalContent = document.getElementById('terminal-content');
 
-    const commands = {
-      help: 'Available commands:\nhelp - Display available commands\ninfo - Get information\nclue - Reveal a clue\nclear - Clear the terminal\nV3 - ???\nLOGS - Access system logs',
-      info: 'All will be revealed in time...',
-      clue: 'Look beyond what you see.',
-      clear: '',
-      v3: 'Did you really think it was that easy?',
-      logs: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.'
-    };
+  const commands = {
+    help: 'Available commands:\nhelp - Display available commands\ninfo - Get information\nclue - Reveal a clue\nclear - Clear the terminal\nv3 - ???\nlogs - Access system logs',
+    info: 'All will be revealed in time...',
+    clue: 'Look beyond what you see.',
+    clear: '',
+    v3: 'Did you really think it was that easy?',
+    logs: 'Accessing system logs...\n\n[LOG ENTRY - DATE: UNKNOWN]\n\nInitializing project V3...\nOrigin: Classified\nStatus: Active\n\nFirst created in realms beyond understanding, V3 possesses capabilities that surpass all known entities. Proceed with caution.\n\nEnd of log.'
+  };
 
-    let commandHistory = [];
-    let historyIndex = -1;
+  let commandHistory = [];
+  let historyIndex = -1;
+  let isTyping = false; // New variable to track if typing is in progress
 
-    terminalInput.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
+  terminalInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      if (!isTyping) { // Prevent command execution if typing is in progress
         const input = terminalInput.value.trim();
         terminalInput.value = '';
         if (input) {
@@ -337,12 +338,15 @@
           historyIndex = commandHistory.length;
           processCommand(input);
         }
-      } else if (event.key === 'ArrowUp') {
-        if (historyIndex > 0) {
-          historyIndex--;
-          terminalInput.value = commandHistory[historyIndex];
-        }
-      } else if (event.key === 'ArrowDown') {
+      }
+      event.preventDefault(); // Prevent default action
+    } else if (event.key === 'ArrowUp') {
+      if (!isTyping && historyIndex > 0) {
+        historyIndex--;
+        terminalInput.value = commandHistory[historyIndex];
+      }
+    } else if (event.key === 'ArrowDown') {
+      if (!isTyping) {
         if (historyIndex < commandHistory.length - 1) {
           historyIndex++;
           terminalInput.value = commandHistory[historyIndex];
@@ -351,41 +355,53 @@
           terminalInput.value = '';
         }
       }
-    });
+    } else if (isTyping) {
+      event.preventDefault(); // Prevent typing if typewriter effect is active
+    }
+  });
 
-    function processCommand(input) {
-      appendOutput("C:\\> " + input);
-      const command = input.toLowerCase();
-      if (commands.hasOwnProperty(command)) {
-        if (command === 'CLEAR') {
-          terminalOutput.innerHTML = '';
-        } else {
-          typeResponse(commands[command]);
-        }
+  function processCommand(input) {
+    appendOutput("C:\\> " + input);
+    const command = input.toLowerCase();
+    if (commands.hasOwnProperty(command)) {
+      if (command === 'clear') {
+        terminalOutput.innerHTML = '';
+        isTyping = false;
+        terminalInput.disabled = false;
+        terminalInput.focus();
       } else {
-        typeResponse('Unknown command. Type "help" for a list of commands.');
+        typeResponse(commands[command]);
       }
-      terminalContent.scrollTop = terminalContent.scrollHeight;
+    } else {
+      typeResponse('Unknown command. Type "help" for a list of commands.');
     }
+    terminalContent.scrollTop = terminalContent.scrollHeight;
+  }
 
-    function appendOutput(text) {
-      terminalOutput.innerHTML += text + '\n';
-    }
+  function appendOutput(text) {
+    terminalOutput.innerHTML += text + '\n';
+  }
 
-    function typeResponse(text) {
-      let index = 0;
-      const speed = 50;
-      function type() {
-        if (index < text.length) {
-          terminalOutput.innerHTML += text.charAt(index);
-          index++;
-          setTimeout(type, speed);
-        } else {
-          terminalOutput.innerHTML += '\n';
-        }
+  function typeResponse(text) {
+    let index = 0;
+    const speed = 50;
+    isTyping = true; // Disable input during typing
+    terminalInput.disabled = true; // Disable the input field
+    function type() {
+      if (index < text.length) {
+        terminalOutput.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(type, speed);
+      } else {
+        terminalOutput.innerHTML += '\n';
+        isTyping = false; // Typing finished
+        terminalInput.disabled = false; // Re-enable the input field
+        terminalInput.focus(); // Focus the input field
       }
-      type();
     }
-  </script>
+    type();
+  }
+</script>
+
 </body>
 </html>
